@@ -1,5 +1,5 @@
-import HomePage from "./components/App";
-import CardPage from "./components/CardPage";
+import HomePage from "./pages/App";
+import CardPage from "./pages/CardPage";
 
 export const routes = {
   "/": {

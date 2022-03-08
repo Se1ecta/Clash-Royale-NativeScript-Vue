@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "@nativescript/core": "^7.0.3",
+    "@triniwiz/nativescript-socketio": "^5.0.1",
     "@vue/devtools": "^5.3.3",
     "axios": "^0.26.0",
     "nativescript-socketio": "^3.3.1",
