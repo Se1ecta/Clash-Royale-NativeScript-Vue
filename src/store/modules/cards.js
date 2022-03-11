@@ -1,16 +1,16 @@
 import { http } from "../../plugins/axios";
 
 const Cards = {
-  state:{
-    cards:{
-        data: [],
-        error: '',
-
-    }
+  state: {
+    cards: {
+      data: [],
+      error: "",
+      status: "",
+    },
   },
   actions: {
     async getCards({ commit }) {
-      commit("REQUEST_CARDS")
+      commit("REQUEST_CARDS");
       await http
         .get("/cards")
         .then((res) => {
@@ -23,20 +23,20 @@ const Cards = {
     },
   },
   mutations: {
-    SUCCESS_GET_CARDS(state, pyaload) {
-      state.cards.data = pyaload;
-      state.cards.staus = "success"
+    REQUEST_CARDS(state) {
+      state.cards.status = "loading";
+    },
+    SUCCESS_GET_CARDS(state, payload) {
+      state.cards.data = payload;
+      state.cards.status = "success";
     },
     ERROR_GET_CARDS(state, err) {
-      state.cards.error = err
+      state.cards.error = err;
     },
-    REQUEST_CARDS(state){
-        state.cards.status = "loading"
-    }
   },
-  getters:{
-      cards: state => state.cards
-  }
+  getters: {
+    cards: (state) => state.cards,
+  },
 };
 
 export default Cards;

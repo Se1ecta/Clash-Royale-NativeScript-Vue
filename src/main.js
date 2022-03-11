@@ -3,6 +3,9 @@ import VueDevtools from "nativescript-vue-devtools";
 import store from "./store";
 import Navigator from "nativescript-vue-navigator";
 import { routes } from "./routes";
+import NSVueGlobalDrawer from 'nativescript-vue-global-drawer'
+
+Vue.use(NSVueGlobalDrawer)
 
 Vue.use(Navigator, { routes });
 
