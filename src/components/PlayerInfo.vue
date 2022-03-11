@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
 import BattleDeck from "./BattleDeck.vue";
 import MainInfo from "./MainInfo.vue";
 export default {
@@ -27,7 +26,6 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["palyer"]),
     mainInfo() {
       return {
         name: this.player.name,
@@ -37,10 +35,10 @@ export default {
       };
     },
   },
-  methods: {
-
+  methods: {},
+  mounted() {
+    console.log(this.player);
   },
-
 };
 </script>
 

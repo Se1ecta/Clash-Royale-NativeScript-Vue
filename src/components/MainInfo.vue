@@ -33,14 +33,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header {
-  background: rgb(45, 126, 219);
-  padding: 20 5;
+  padding: 20 20;
+  color: black;
   &-left {
   }
   .name-wrapper {
     .name {
       font-size: 18;
-      color: white;
+      color: rgb(45, 126, 219);
     }
     .tag {
       font-size: 12;

@@ -1,5 +1,5 @@
 <template>
-  <Page @loaded="onPageLoaded">
+  <Page>
     <ActionBar title="Cards" color="white" icon="">
       <GridLayout width="100%" columns="auto, *">
         <Label text="MENU" @tap="$drawer.toggle()" col="0" />
@@ -8,10 +8,10 @@
 
     <ScrollView height="100%" orientation="vertical">
       <StackLayout padding="0 5">
-        <StackLayout v-if="loading">
+        <StackLayout v-if="cards.status === 'loading'">
           <Label>Loading...</Label>
         </StackLayout>
-        <StackLayout v-else>
+        <StackLayout v-else-if="cards.status === 'success'">
           <Card v-for="card in cards.data" :key="card.id" :card="card" />
         </StackLayout>
       </StackLayout>
@@ -47,9 +47,10 @@ export default {
   },
   methods: {},
   created() {
-    this.loading = true;
-
-    // this.getCards;
+    this.getCards;
+    this.$nextTick(() => {
+      this.loading = true;
+    });
 
     this.loading = false;
     console.log("greet");

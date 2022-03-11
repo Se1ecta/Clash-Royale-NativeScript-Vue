@@ -1,15 +1,32 @@
 <template>
   <Page>
-    <ActionBar title="Players" color="white" icon="">
+    <ActionBar title="Player" color="white" icon="">
       <GridLayout width="100%" columns="auto, *">
         <Label text="MENU" @tap="$drawer.toggle()" col="0" />
-        <Label class="title" text="Players" col="1" /> </GridLayout
+        <Label class="title" text="Player" col="1" /> </GridLayout
     ></ActionBar>
-    <StackLayout>
+    <StackLayout class="player">
       <FlexboxLayout class="container">
-        <TextField hint="enter tag player without #" class="player-tag" />
+        <SearchBar
+          hint="Enter tag player without #"
+          v-model="playerTag"
+          @submit="onSubmit(playerTag)"
+        />
       </FlexboxLayout>
-
+      <FlexboxLayout v-if="player.status === 'loading'" class="message">
+        <ActivityIndicator :busy="true" />
+      </FlexboxLayout>
+      <PlayerInfo
+        v-else-if="player.status === 'success'"
+        :player="player.data"
+      />
+      <FlexboxLayout
+        v-else-if="player.status === 'error'"
+        textAligment
+        class="message"
+      >
+        <Label :text="player.error"></Label>
+      </FlexboxLayout>
     </StackLayout>
   </Page>
 </template>
@@ -23,6 +40,7 @@ export default {
   },
   data() {
     return {
+      playerTag: "Q9UQCP20",
       loading: false,
     };
   },
@@ -40,14 +58,31 @@ export default {
       }, 3000);
       this.loading = true;
     },
+    onSubmit(tag) {
+      this.loading = true;
+      this.getPlayer(tag);
+      this.loading = false;
+      console.log(this.player.currentDeck);
+    },
   },
-  mounted() {
-    this.getPlayer("Q9UQCP20");
-  },
+  mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
+.message {
+  width: 100%;
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+  font-size: 18;
+  margin-bottom: 20;
+
+}
+.player {
+  width: 100%;
+  height: 100%;
+}
 .container {
   justify-content: center;
   align-items: center;

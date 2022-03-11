@@ -1,7 +1,12 @@
 <template>
   <StackLayout class="battle-deck">
     <StackLayout class="battle-deck-header">
-      <Label text="Battle deck" textAlignment="center"></Label>
+      <Label
+        text="Battle deck"
+        textAlignment="center"
+        fontSize="18"
+        color="black"
+      ></Label>
     </StackLayout>
     <StackLayout class="battle-deck-body">
       <FlexboxLayout class="deck-container">
@@ -25,7 +30,6 @@ export default {
     battleDeck: {
       type: Array,
       required: true,
-      default: [],
     },
   },
 };
@@ -33,7 +37,6 @@ export default {
 
 <style lang="scss" scoped>
 .battle-deck {
-  background: red;
   .deck-container {
     flex-wrap: wrap;
     justify-content: center;

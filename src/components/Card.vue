@@ -38,7 +38,7 @@ export default {
 .card {
   width: 100%;
   height: 120;
-  background: pink;
+  background: rgb(62, 123, 214);
   border-radius: 5;
   padding: 5;
   margin: 5;

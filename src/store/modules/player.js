@@ -16,7 +16,6 @@ const Cards = {
         .get(`/players/%23${tag}`)
         .then((res) => {
           const player = res.data;
-          console.log(res.data);
           commit("SUCCESS_GET_PLAYER", player);
         })
         .catch((err) => {
