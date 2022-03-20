@@ -3,9 +3,15 @@ import VueDevtools from "nativescript-vue-devtools";
 import store from "./store";
 import Navigator from "nativescript-vue-navigator";
 import { routes } from "./routes";
-import NSVueGlobalDrawer from 'nativescript-vue-global-drawer'
+import NSVueGlobalDrawer from "nativescript-vue-global-drawer";
+import RadListView from "nativescript-ui-listview/vue";
+import CollectionView from '@nativescript-community/ui-collectionview/vue';
 
-Vue.use(NSVueGlobalDrawer)
+Vue.use(CollectionView);
+
+Vue.use(RadListView);
+
+Vue.use(NSVueGlobalDrawer);
 
 Vue.use(Navigator, { routes });
 

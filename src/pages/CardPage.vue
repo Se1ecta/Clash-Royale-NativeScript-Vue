@@ -6,22 +6,46 @@
         <Label class="title" text="Cards" col="1" /> </GridLayout
     ></ActionBar>
 
-    <ScrollView height="100%" orientation="vertical">
-      <StackLayout padding="0 5">
-        <StackLayout v-if="cards.status === 'loading'">
-          <Label>Loading...</Label>
+    <StackLayout class="cards-container">
+      <FlexboxLayout v-if="cards.status === 'loading'" class="status">
+        <ActivityIndicator :busy="true" />
+      </FlexboxLayout>
+      <FlexboxLayout v-if="cards.status === 'error'">
+        <Label :text="cards.error"></Label>
+        <Label>error</Label>
+      </FlexboxLayout>
+      <CollectionView
+        :items="items"
+        colWidth="100%"
+        rowHeight="120"
+        padding="0 5"
+        @loadMoreItems="limit += 10"
+      >
+        <v-template>
+          <Card :card="item" />
+        </v-template>
+      </CollectionView>
+      <!-- <ScrollView
+        height="100%"
+        v-else-if="cards.status === 'success'"
+        ref="scrollView"
+        @scroll="onScrolled($event)"
+      >
+        <StackLayout padding="0 5">
+          <StackLayout v-cloak>
+            <Card v-for="card in items" :key="card.id" :card="card" />
+          </StackLayout>
         </StackLayout>
-        <StackLayout v-else-if="cards.status === 'success'">
-          <Card v-for="card in cards.data" :key="card.id" :card="card" />
-        </StackLayout>
-      </StackLayout>
-    </ScrollView>
+      </ScrollView> -->
+    </StackLayout>
   </Page>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import Card from "../components/Card.vue";
+import { ObservableArray } from "data/observable-array";
+
 export default {
   components: {
     Card,
@@ -29,33 +53,43 @@ export default {
   data() {
     return {
       loading: false,
+      scrollOffset: 0,
+      limit: 10,
     };
   },
   computed: {
     ...mapGetters(["cards"]),
+    items() {
+      const result = [];
+      if (this.limit >= this.cards.data.length) {
+        this.limit = this.cards.data.length;
+      }
+      for (var i = 0; i < this.limit; i++) {
+        result.push(this.cards.data[i]);
+      }
+      return result;
+    },
   },
   methods: {
     ...mapActions(["getCards"]),
     goBack() {
       this.$navigator.navigate("/", { clearHistory: true });
     },
-    onPageLoaded(args) {
-      console.log("Page Loaded!");
-      const page = args.object;
-      console.log("Page reference from loaded event: ", page);
+    onScrolled(args) {
+      console.log(`scrollX: ${args.scrollX}`);
+      console.log(`scrollY: ${args.scrollY}`);
     },
-  },
-  methods: {},
-  created() {
-    this.getCards;
-    this.$nextTick(() => {
-      this.loading = true;
-    });
 
-    this.loading = false;
-    console.log("greet");
+    gridViewItemLoading(args) {
+      console.log("item loading " + args.index.toString());
+    },
+
+
   },
-  updated() {},
+  beforeMount() {
+    this.getCards(this.limit);
+  },
+  mounted() {},
 };
 </script>
 
@@ -63,6 +97,14 @@ export default {
 .title {
   text-align: left;
   padding-left: 16;
+}
+.status {
+  width: 100%;
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+  font-size: 18;
+  margin-bottom: 20;
 }
 
 [v-cloak] {

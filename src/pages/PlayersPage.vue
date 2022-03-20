@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <Page @loaded="onPageLoaded">
     <ActionBar title="Player" color="white" icon="">
       <GridLayout width="100%" columns="auto, *">
         <Label text="MENU" @tap="$drawer.toggle()" col="0" />
@@ -13,7 +13,7 @@
           @submit="onSubmit(playerTag)"
         />
       </FlexboxLayout>
-      <FlexboxLayout v-if="player.status === 'loading'" class="message">
+      <FlexboxLayout v-if="player.status === 'loading'" class="status">
         <ActivityIndicator :busy="true" />
       </FlexboxLayout>
       <PlayerInfo
@@ -23,7 +23,7 @@
       <FlexboxLayout
         v-else-if="player.status === 'error'"
         textAligment
-        class="message"
+        class="status"
       >
         <Label :text="player.error"></Label>
       </FlexboxLayout>
@@ -64,20 +64,24 @@ export default {
       this.loading = false;
       console.log(this.player.currentDeck);
     },
+    onPageLoaded(args) {
+      console.log("Page Loaded!");
+      const page = args.object;
+      console.log("Page reference from loaded event: ", page);
+    },
   },
   mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
-.message {
+.status {
   width: 100%;
   height: 70%;
   justify-content: center;
   align-items: center;
   font-size: 18;
   margin-bottom: 20;
-
 }
 .player {
   width: 100%;

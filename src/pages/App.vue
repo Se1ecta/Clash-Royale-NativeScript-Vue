@@ -1,5 +1,5 @@
 <template>
-  <Page actionBarHidden="true" @loaded="onPageLoaded">
+  <Page actionBarHidden="true">
     <GlobalDrawer>
       <template slot="content">
         <Label class="drawer-header" text="Drawer" />
@@ -18,7 +18,6 @@
 <script >
 import { mapActions } from "vuex";
 import Home from "./Home.vue";
-import CardsPage from "./CardPage.vue";
 export default {
   components: {
     Home,
@@ -55,11 +54,6 @@ export default {
     greet() {
       console.log("greet");
     },
-    onPageLoaded(args) {
-      console.log("Page Loaded!");
-      const page = args.object;
-      console.log("Page reference from loaded event: ", page);
-    },
   },
   updated() {
     this.loading = true;
@@ -67,17 +61,16 @@ export default {
   },
   mounted() {
     this.getCards();
-    console.log(this.$refs.drawer);
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 .drawer-header {
   padding: 50 16 16 16;
   margin-bottom: 16;
-  background-color: #53ba82;
-  color: #ffffff;
+  background-color: #a253ba;
+  color: #eeeeee;
   font-size: 24;
 }
 
@@ -85,5 +78,10 @@ export default {
   padding: 8 16;
   color: #333333;
   font-size: 16;
+  background: white;
+  border: none;
+  border-width: 0;
 }
 </style>
+
+

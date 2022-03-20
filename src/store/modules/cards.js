@@ -9,10 +9,10 @@ const Cards = {
     },
   },
   actions: {
-    async getCards({ commit }) {
+    async getCards({ commit }, limit) {
       commit("REQUEST_CARDS");
       await http
-        .get("/cards")
+        .get(`/cards?limit=${limit}`)
         .then((res) => {
           const cards = res.data.items;
           commit("SUCCESS_GET_CARDS", cards);
@@ -31,6 +31,7 @@ const Cards = {
       state.cards.status = "success";
     },
     ERROR_GET_CARDS(state, err) {
+      state.cards.status = "error";
       state.cards.error = err;
     },
   },

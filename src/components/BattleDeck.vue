@@ -16,7 +16,11 @@
           :key="index"
         >
           <StackLayout class="image-container">
-            <Image :src="card.iconUrls.medium" stretch="none" />
+            <Image
+              loadMode
+              :src="card.iconUrls.medium"
+              stretch="none"
+            />
           </StackLayout>
         </StackLayout>
       </FlexboxLayout>
@@ -25,11 +29,29 @@
 </template>
 
 <script>
+import imageSource from "image-source";
 export default {
   props: {
     battleDeck: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    imageLoaded(args) {
+      var img = args.object;
+      var bc = img.bindingContext;
+      console.log(args);
+
+      if (bc.Loaded) {
+        img.imageSource = bc.ImageSource;
+      } else {
+        imageSource.fromUrl(bc.ImageURL).then(function (iSource) {
+          img.imageSource = iSource;
+          bc.set("ImageSource", iSource);
+          bc.set("Loaded", true);
+        });
+      }
     },
   },
 };

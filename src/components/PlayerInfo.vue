@@ -3,6 +3,7 @@
     <StackLayout>
       <MainInfo :mainInfo="mainInfo" />
       <BattleDeck :battleDeck="player.currentDeck" />
+      <!-- <Chart/> -->
     </StackLayout>
   </ScrollView>
 </template>
@@ -10,10 +11,12 @@
 <script>
 import BattleDeck from "./BattleDeck.vue";
 import MainInfo from "./MainInfo.vue";
+import Chart from "./Chart.vue"
 export default {
   components: {
     BattleDeck,
     MainInfo,
+    Chart
   },
   data() {
     return {};
@@ -37,7 +40,6 @@ export default {
   },
   methods: {},
   mounted() {
-    console.log(this.player);
   },
 };
 </script>

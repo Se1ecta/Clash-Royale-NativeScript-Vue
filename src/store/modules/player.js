@@ -1,6 +1,6 @@
 import { http } from "../../plugins/axios";
 
-const Cards = {
+const Player = {
   state: {
     player: {
       data: {},
@@ -11,7 +11,7 @@ const Cards = {
   actions: {
     async getPlayer({ commit }, tag) {
       commit("REQUEST_PLAYER");
-      console.log(`/players/%23${tag}`)
+
       await http
         .get(`/players/%23${tag}`)
         .then((res) => {
@@ -20,7 +20,6 @@ const Cards = {
         })
         .catch((err) => {
           commit("ERROR_GET_PLAYER", err);
-          console.log(err);
         });
     },
   },
@@ -28,9 +27,13 @@ const Cards = {
     REQUEST_PLAYER(state) {
       state.player.status = "loading";
     },
-    ERROR_GET_PLAYER(state, payload) {
+    ERROR_GET_PLAYER(state, err) {
       state.player.status = "error";
-      state.player.error = payload;
+      if (err.response.status === 404) {
+        state.player.error = "Player not founded";
+        return;
+      }
+      state.player.error = err;
     },
     SUCCESS_GET_PLAYER(state, payload) {
       state.player.data = payload;
@@ -42,4 +45,4 @@ const Cards = {
   },
 };
 
-export default Cards;
+export default Player;
